@@ -4,33 +4,33 @@ const path = require("path");
 
 const app = express();
 
-// ===== Middlewares =====
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// ===== API 路由（必须在 static 前也可以，但这样更清晰）=====
+// API
 const gameRoutes = require("./routes/game");
 app.use("/game", gameRoutes);
 
-// ===== 静态资源 =====
+// Static
 app.use(express.static(path.join(__dirname, "public")));
 
-// ===== 首页（关键：确保 fallback 正常）=====
+// 首页
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// ===== 防止前端刷新 404（重要）=====
-app.get("*", (req, res) => {
+// ✅ 正确的 fallback（替代 "*"）
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// ===== Health check =====
+// health
 app.get("/ping", (req, res) => {
   res.send("ok");
 });
 
-// ===== 启动 =====
+// port
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
