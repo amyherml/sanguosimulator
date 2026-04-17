@@ -4,28 +4,33 @@ const path = require("path");
 
 const app = express();
 
-// Middlewares（必须在 routes 前）
+// ===== Middlewares =====
 app.use(cors());
 app.use(express.json());
 
-// Static files
-app.use(express.static(path.join(__dirname, "public")));
-
-// Routes
+// ===== API 路由（必须在 static 前也可以，但这样更清晰）=====
 const gameRoutes = require("./routes/game");
 app.use("/game", gameRoutes);
 
-// 首页
+// ===== 静态资源 =====
+app.use(express.static(path.join(__dirname, "public")));
+
+// ===== 首页（关键：确保 fallback 正常）=====
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Health check（Render 用）
+// ===== 防止前端刷新 404（重要）=====
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
+// ===== Health check =====
 app.get("/ping", (req, res) => {
   res.send("ok");
 });
 
-// 启动端口（Render 必须用 process.env.PORT）
+// ===== 启动 =====
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
