@@ -1,8 +1,14 @@
+/* public/style.css */
+
 body {
   background: #111;
   color: #eee;
   font-family: "Microsoft YaHei", sans-serif;
-  padding: 20px;
+
+  /* ✅ 移动端优化 */
+  margin: 0;
+  padding: 16px;
+  font-size: 18px;
 }
 
 #game {
@@ -10,33 +16,67 @@ body {
   margin: auto;
 }
 
-#narrative p {
-  margin: 10px 0;
-  line-height: 1.6;
+/* 标题 */
+#title {
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
+/* 正文 */
+#narrative p {
+  margin: 12px 0;
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+/* 选项按钮 */
 #choices button {
   display: block;
-  margin: 10px 0;
-  padding: 10px;
+  margin: 12px 0;
+  padding: 14px;
   width: 100%;
+
+  font-size: 18px;
+
   background: #222;
   color: #fff;
   border: 1px solid #555;
+  border-radius: 8px;
+
   cursor: pointer;
 }
 
-#choices button:hover {
-  background: #444;
+/* 点击反馈（手机重要） */
+#choices button:active {
+  background: #555;
 }
 
+/* 结果 */
 #result {
   margin: 20px 0;
   color: #ffd;
+  font-size: 18px;
 }
 
+/* 属性 */
 #stats {
   margin-top: 20px;
   font-size: 14px;
   color: #aaa;
+}
+
+/* ✅ 小屏进一步优化 */
+@media (max-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+
+  #title {
+    font-size: 24px;
+  }
+
+  #choices button {
+    font-size: 16px;
+    padding: 12px;
+  }
 }
