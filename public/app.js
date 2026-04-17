@@ -1,8 +1,10 @@
-const API = "/game"; // ✅ 改成相对路径（关键修复）
+// public/app.js
+
+const API = "/game"; // ✅ 修复线上地址
 
 async function fetchNode() {
   try {
-    const res = await fetch(`${API}/node`);
+    const res = await fetch(`${API}/start`); // ✅ 改为 start
     const data = await res.json();
     renderNode(data.node, data.state);
   } catch (e) {

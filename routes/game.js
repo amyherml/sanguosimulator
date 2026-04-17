@@ -1,3 +1,5 @@
+// routes/game.js
+
 const express = require("express");
 const router = express.Router();
 
@@ -7,6 +9,19 @@ const game = engine.loadGame("./data/chapter1.json");
 
 let state = engine.initState(game);
 let currentNodeId = game.meta.start_node;
+
+// ✅ 新增：重新开始游戏（刷新用）
+router.get("/start", (req, res) => {
+  state = engine.initState(game);
+  currentNodeId = game.meta.start_node;
+
+  const node = engine.getNode(game, currentNodeId);
+
+  res.json({
+    node,
+    state
+  });
+});
 
 // 获取当前节点
 router.get("/node", (req, res) => {
